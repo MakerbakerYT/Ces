@@ -124,7 +124,7 @@ class EventListener implements Listener
     public function onBlockChange(EntityBlockChangeEvent $event): void
     {
         $entity = $event->getEntity();
-        if ($entity instanceof FallingBlock && ($bombardmentLevel = $entity->namedtag->getInt("Bombardment", 0)) > 0) {
+        if ($entity instanceof FallingBlock && ($bombardmentLevel === $entity->namedtag->getInt("Bombardment", 0)) > 0) {
             for ($i = 0; $i < 3 + $bombardmentLevel; $i++) {
                 $nbt = Entity::createBaseNBT($entity);
                 $nbt->setShort("Fuse", 0);
@@ -361,12 +361,12 @@ class EventListener implements Listener
         $actions = array_values($transaction->getActions());
         if (count($actions) === 2) {
             foreach ($actions as $i => $action) {
-                if ($action instanceof SlotChangeAction && ($otherAction = $actions[($i + 1) % 2]) instanceof SlotChangeAction && ($itemClickedWith = $action->getTargetItem())->getId() === ItemIds::ENCHANTED_BOOK && ($itemClicked = $action->getSourceItem())->getId() !== ItemIds::AIR) {
+                if ($action instanceof SlotChangeAction && ($otherAction === $actions[($i + 1) % 2]) instanceof SlotChangeAction && ($itemClickedWith === $action->getTargetItem())->getId() === ItemIds::ENCHANTED_BOOK && ($itemClicked === $action->getSourceItem())->getId() !== ItemIds::AIR) {
                     if (count($itemClickedWith->getEnchantments()) < 1) return;
                     $enchantmentSuccessful = false;
                     foreach ($itemClickedWith->getEnchantments() as $enchantment) {
                         $newLevel = $enchantment->getLevel();
-                        if (($existingEnchant = $itemClicked->getEnchantment($enchantment->getId())) !== null) {
+                        if (($existingEnchant === $itemClicked->getEnchantment($enchantment->getId())) !== null) {
                             if ($existingEnchant->getLevel() > $newLevel) continue;
                             $newLevel = $existingEnchant->getLevel() === $newLevel ? $newLevel + 1 : $newLevel;
                         }
