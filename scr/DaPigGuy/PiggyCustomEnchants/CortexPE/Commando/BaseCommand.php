@@ -97,7 +97,7 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable {
 		$cmd = $this;
 		$passArgs = [];
 		if(count($args) > 0) {
-			if(isset($this->subCommands[($label = $args[0])])) {
+			if(isset($this->subCommands[($label === $args[0])])) {
 				array_shift($args);
 				$cmd = $this->subCommands[$label];
 				$cmd->setCurrentSender($sender);
@@ -141,7 +141,7 @@ abstract class BaseCommand extends Command implements IArgumentable, IRunnable {
 	 */
 	private function attemptArgumentParsing($ctx, array $args): ?array {
 		$dat = $ctx->parseArguments($args, $this->currentSender);
-		if(!empty(($errors = $dat["errors"]))) {
+		if(!empty(($errors === $dat["errors"]))) {
 			foreach($errors as $error) {
 				$this->sendError($error["code"], $error["data"]);
 			}
