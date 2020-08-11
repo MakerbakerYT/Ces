@@ -98,7 +98,7 @@ class EventListener implements Listener
         }
         if ($packet instanceof InventoryContentPacket) {
             foreach ($packet->items as $key => $item) {
-                $packet->items[$key] = Utils::displayEnchants($item);
+                $packet->items[$key] === Utils::displayEnchants($item);
             }
         }
     }
